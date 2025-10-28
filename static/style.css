@@ -1,0 +1,52 @@
+:root{
+  --bg:#071226;
+  --glass: rgba(255,255,255,0.03);
+  --muted:#9aa4b2;
+  --accent1:#00ff9c;
+  --accent2:#7c4dff;
+  --radius:12px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+  background:
+    radial-gradient(800px 500px at 10% 10%, rgba(124,77,255,0.04), transparent),
+    radial-gradient(600px 400px at 90% 90%, rgba(0,255,156,0.03), transparent),
+    var(--bg);
+  color:#e6eef8;
+}
+.container{
+  width:1000px;
+  max-width:98%;
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.02);
+}
+.panel{padding:14px;border-radius:12px}
+h1{margin:0;font-size:20px}
+.lead{color:var(--muted);font-size:13px;margin-top:6px;margin-bottom:12px}
+.input, textarea{width:100%;padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);color:inherit;font-size:14px}
+textarea{min-height:100px;resize:vertical}
+.row{display:flex;gap:10px;margin-top:8px}
+.label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021;box-shadow:0 8px 30px rgba(124,77,255,0.06)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+.right{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.01);display:flex;flex-direction:column;gap:12px;align-items:center}
+.small{font-size:12px;color:var(--muted)}
+.status{padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.02);width:100%;text-align:center}
+.logbox{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;min-height:160px;max-height:380px;overflow:auto;width:100%}
+.footer{font-size:12px;color:var(--muted);text-align:center}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-size:12px;margin-left:8px}
+code{background:rgba(255,255,255,0.02);padding:4px 6px;border-radius:6px}
