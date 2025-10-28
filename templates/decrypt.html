@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Decrypt — Pro E2EE Sender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container" style="max-width:900px;">
+    <div class="panel">
+      <h1>Decrypt Payload</h1>
+      <p class="lead">Paste base64(payload) and base64 key to decrypt locally.</p>
+      <form method="post">
+        <label>Payload (base64)</label>
+        <textarea class="input" name="payload" required style="min-height:120px">{{ request.form.payload or '' }}</textarea>
+        <label>Encryption Key (base64)</label>
+        <input class="input" name="encryption_key" type="text" value="{{ request.form.encryption_key or '' }}" required>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn btn-primary" type="submit">Decrypt</button>
+          <a class="btn btn-ghost" href="/">Back</a>
+        </div>
+      </form>
+
+      {% if result %}
+      <div style="margin-top:12px" class="small">
+        <strong>Decrypted:</strong>
+        <div class="logbox" style="white-space:pre-wrap;">{{ result }}</div>
+      </div>
+      {% endif %}
+      {% if error %}
+      <div style="margin-top:12px;color:#ffb4b4"><strong>Error:</strong> {{ error }}</div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+        </html>
