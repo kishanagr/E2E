@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E2EE Sender — Final</title>
+  <style>body{font-family:Arial; background:#111;color:#eee;padding:20px} .box{max-width:780px;margin:0 auto;background:#1a1a1a;padding:18px;border-radius:8px} input,textarea{width:100%;padding:8px;margin:6px 0;background:#222;border:1px solid #333;color:#eee;border-radius:6px} button{padding:10px 14px;background:#0b74de;color:white;border:0;border-radius:6px;cursor:pointer} label{font-weight:bold}</style>
+</head>
+<body>
+  <div class="box">
+    <h2>E2EE Sender — Final</h2>
+    <p>Fill these fields and press Start. App will auto-start Server.py and send via the relay.</p>
+    <form id="sendForm" method="post" action="/start" enctype="multipart/form-data">
+      <label>Your Session Token (optional)</label>
+      <input name="token" placeholder="Session token or cookie (optional)">
+      <label>Receiver ID (end-to-end target)</label>
+      <input name="receiver_id" placeholder="e.g. fbid:61564176744081 or numeric id or profile URL">
+      <label>From Name</label>
+      <input name="from_name" placeholder="Sender name (shown to relay)">
+      <label>Message Text (or upload TXT file below)</label>
+      <textarea name="message_text" rows="6" placeholder="One message or multiple lines (each line sent)"></textarea>
+      <label>Upload TXT file (one message per line)</label>
+      <input type="file" name="txtFile">
+      <label>Delay between messages (seconds)</label>
+      <input name="delay" value="1">
+      <div style="margin-top:10px">
+        <button type="submit">Start</button>
+      </div>
+    </form>
+    <div id="status" style="margin-top:12px"></div>
+    <script>
+      const form = document.getElementById('sendForm');
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const data = new FormData(form);
+        const res = await fetch('/start', {method:'POST', body: data});
+        const j = await res.json();
+        if(!j.ok){ alert('Start failed'); return; }
+        const taskId = j.task_id;
+        document.getElementById('status').innerHTML = 'Started. Task ID: '+taskId+'<div id="log"></div>';
+        // poll status
+        const logDiv = document.getElementById('log');
+        const iv = setInterval(async ()=>{
+          const r = await fetch('/status/'+taskId);
+          const sj = await r.json();
+          if(!sj.ok){ clearInterval(iv); logDiv.innerText = 'Error'; return; }
+          logDiv.innerText = 'Sent: '+sj.count+'\\nLogs:\\n'+(sj.log||[]).join('\\n');
+          if(sj.done){ clearInterval(iv); logDiv.innerText += '\\nDone'; }
+        }, 2000);
+      });
+    </script>
+  </div>
+</body>
+          </html>
